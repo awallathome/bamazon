@@ -35,12 +35,14 @@ function start() {
       type: "input",
       message: "What is the ID of the item you want to buy?",
       validate: function (value) {
-        var pass = value.match(/^([01]{1})?[-.\s]?\(?(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})\s?((?:#|ext\.?\s?|x\.?\s?){1}(?:\d+)?)?$/i);
-        if (pass) {
+        if (isNaN(value)) {
+           console.log("\nPlease enter a number.");
+           return false;
+        }
+        if (doesItExist(res, value)) {
           return true;
         }
-        //COME BACK here to check for an integer. Maybe user parseint()? 
-        return true;
+        
       }
     }).then(function (answers) {
       inquirer.prompt({
@@ -60,3 +62,13 @@ function start() {
     })
   })
 }
+
+function doesItExist(itemArray, item_id) {
+  for (i = 0; i < itemArray.length; i++) {
+    if (itemArray[i] === itemArray[i].item_id) {
+      return true;
+    } 
+  } 
+  return false;
+}
+
